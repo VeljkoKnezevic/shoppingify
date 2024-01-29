@@ -2,6 +2,8 @@ package com.veljkoknezevic.server.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Item {
 
@@ -12,8 +14,15 @@ public class Item {
     private String name;
     private String note;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "categoryId", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "categoryId")
     private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "item_list_junction",
+            joinColumns = @JoinColumn(name = "itemId"),
+            inverseJoinColumns = @JoinColumn(name = "listId")
+    )
+    Set<List> lists;
 
     public int getId() {
         return id;

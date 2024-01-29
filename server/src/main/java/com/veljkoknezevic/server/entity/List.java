@@ -2,6 +2,8 @@ package com.veljkoknezevic.server.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class List {
 
@@ -12,6 +14,9 @@ public class List {
     @Column(nullable = true)
     //Stores 3 states: Null when the list is saved, true if completed, false if cancelled
     private boolean completed;
+
+    @ManyToMany(mappedBy = "lists")
+    Set<Item> items;
 
     public List() {
     }
