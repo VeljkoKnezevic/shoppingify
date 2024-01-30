@@ -13,7 +13,7 @@ public class Item {
 
     private String name;
     private String note;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "categoryId")
     private Category category;
     @ManyToMany
