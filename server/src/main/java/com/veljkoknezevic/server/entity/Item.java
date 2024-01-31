@@ -2,6 +2,7 @@ package com.veljkoknezevic.server.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,16 +14,9 @@ public class Item {
 
     private String name;
     private String note;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "categoryId")
     private Category category;
-    @ManyToMany
-    @JoinTable(
-            name = "item_list_junction",
-            joinColumns = @JoinColumn(name = "itemId"),
-            inverseJoinColumns = @JoinColumn(name = "listId")
-    )
-    Set<List> lists;
 
     public int getId() {
         return id;
@@ -55,4 +49,5 @@ public class Item {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }

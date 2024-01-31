@@ -1,11 +1,14 @@
 package com.veljkoknezevic.server.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
-public class List {
+@Table(name = "list")
+public class ShoppingList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,15 +18,21 @@ public class List {
     //Stores 3 states: Null when the list is saved, true if completed, false if cancelled
     private boolean completed;
 
-    @ManyToMany(mappedBy = "lists")
-    Set<Item> items;
+    @ManyToMany
+    @JoinTable(
+            name = "item_list",
+            joinColumns = @JoinColumn(name = "listId"),
+            inverseJoinColumns = @JoinColumn(name = "itemId")
+    )
+    List<Item> items;
 
-    public List() {
+    public ShoppingList() {
     }
 
-    public List(int id, String name, boolean completed) {
+    public ShoppingList(int id, String name, boolean completed) {
         this.id = id;
         this.name = name;
+
         this.completed = completed;
     }
 
@@ -49,5 +58,13 @@ public class List {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }
