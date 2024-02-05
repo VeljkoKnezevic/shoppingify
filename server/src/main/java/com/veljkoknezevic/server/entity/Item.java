@@ -14,8 +14,8 @@ public class Item {
 
     private String name;
     private String note;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "categoryId")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "categoryId", nullable = false)
     private Category category;
 
     public int getId() {

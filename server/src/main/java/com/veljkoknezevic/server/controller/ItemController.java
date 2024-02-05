@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/item")
+@CrossOrigin
 public class ItemController {
 
     private final ItemService itemService;
@@ -49,6 +50,9 @@ public class ItemController {
 
         return ResponseEntity.ok().body(item1);
     }
+
+
+
 
 
 }
