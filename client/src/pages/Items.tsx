@@ -1,22 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from "@tanstack/react-query";
 import LeftSidebar from "../components/leftSidebar";
 import { useEffect } from "react";
-import { TItems } from "../types";
+import { Table } from "../types";
+import RightSidebar from "../components/rightSidebar";
 
-const Items = () => {
-  const getItems = async (): Promise<TItems[]> => {
-    const response = await fetch("http://localhost:8080/item/all", {
-      method: "GET",
-    });
+type TItems = {
+  queryFunction: (table: Table) => Promise<any>;
+};
 
-    const json = await response.json();
-
-    return json;
-  };
-
+const Items = ({ queryFunction }: TItems) => {
   const { data } = useQuery({
     queryKey: ["items"],
-    queryFn: getItems,
+    queryFn: queryFunction("item"),
   });
 
   useEffect(() => {
@@ -43,6 +39,8 @@ const Items = () => {
             return <div key={item.id}>{item.name}</div>;
           })}
       </main>
+
+      <RightSidebar />
     </div>
   );
 };
